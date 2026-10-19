@@ -40,7 +40,7 @@
             <form string="Job Application">
                 <header>
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,interview,hired,closed"/>
+                           statusbar_visible="draft,interview,hired,closed" options="{'clickable': 1}"/>
                 </header>
                 <sheet>
                     <group>
