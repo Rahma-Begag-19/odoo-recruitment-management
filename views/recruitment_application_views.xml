@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <!-- ============================== -->
+    <!-- JOB APPLICATION SEARCH VIEW    -->
+    <!-- ============================== -->
+    <record id="view_recruitment_application_search" model="ir.ui.view">
+        <field name="name">recruitment.application.search</field>
+        <field name="model">recruitment.application</field>
+        <field name="arch" type="xml">
+            <search string="Search Applications">
+                <field name="name"/>
+                <field name="job_id"/>
+                <field name="email"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- JOB APPLICATION LIST VIEW -->
+    <record id="view_recruitment_application_list" model="ir.ui.view">
+        <field name="name">recruitment.application.list</field>
+        <field name="model">recruitment.application</field>
+        <field name="arch" type="xml">
+            <list string="Job Applications">
+                <field name="name"/>
+                <field name="job_id"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="application_date"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- JOB APPLICATION FORM VIEW -->
+    <record id="view_recruitment_application_form" model="ir.ui.view">
+        <field name="name">recruitment.application.form</field>
+        <field name="model">recruitment.application</field>
+        <field name="arch" type="xml">
+            <form string="Job Application">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,interview,hired,closed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Candidate">
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="gender"/>
+                            <field name="location"/>
+                        </group>
+                        <group string="Application">
+                            <field name="job_id"/>
+                            <field name="application_date"/>
+                            <field name="resume"
+                                   filename="resume_filename"/>
+                            <field name="resume_filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="note"/>
+                        </page>
+                        <page string="Interviews">
+                            <field name="interview_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="interview_date"/>
+                                    <field name="interview_type"/>
+                                    <field name="result"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

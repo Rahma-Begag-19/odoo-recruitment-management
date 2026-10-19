@@ -32,6 +32,8 @@
                             <field name="work_mode"/>
                             <field name="number_of_positions"/>
                             <field name="salary"/>
+                             <field name="experience"
+                                   widget="many2many_tags"/>
                         </group>
 
                         <group string="Publication">
@@ -44,11 +46,6 @@
                         <page string="Job Description">
                             <field name="description"
                                    placeholder="Describe the position, responsibilities, and expectations..."/>
-                        </page>
-
-                        <page string="Required Experience">
-                            <field name="experience"
-                                   widget="many2many_tags"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -168,6 +165,34 @@
                 <field name="state"/>
                 <field name="work_mode"/>
             </search>
+        </field>
+    </record>
+
+
+    <!-- ============================== -->
+    <!-- PROFESSIONAL EXPERIENCE VIEWS  -->
+    <!-- ============================== -->
+    <record id="view_recruitment_experience_list" model="ir.ui.view">
+        <field name="name">recruitment.experience.list</field>
+        <field name="model">recruitment.experience</field>
+        <field name="arch" type="xml">
+            <list string="Professional Experience">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_recruitment_experience_form" model="ir.ui.view">
+        <field name="name">recruitment.experience.form</field>
+        <field name="model">recruitment.experience</field>
+        <field name="arch" type="xml">
+            <form string="Professional Experience">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 

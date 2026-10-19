@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================== -->
+    <!-- INTERVIEW SEARCH VIEW          -->
+    <!-- ============================== -->
+    <record id="view_recruitment_interview_search" model="ir.ui.view">
+        <field name="name">recruitment.interview.search</field>
+        <field name="model">recruitment.interview</field>
+        <field name="arch" type="xml">
+            <search string="Search Interviews">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="interview_date"/>
+                <field name="result"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- INTERVIEW LIST VIEW -->
+    <record id="view_recruitment_interview_list" model="ir.ui.view">
+        <field name="name">recruitment.interview.list</field>
+        <field name="model">recruitment.interview</field>
+        <field name="arch" type="xml">
+            <list string="Interviews">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="interview_date"/>
+                <field name="interview_type"/>
+                <field name="interviewer_id"/>
+                <field name="result" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- INTERVIEW FORM VIEW -->
+    <record id="view_recruitment_interview_form" model="ir.ui.view">
+        <field name="name">recruitment.interview.form</field>
+        <field name="model">recruitment.interview</field>
+        <field name="arch" type="xml">
+            <form string="Interview">
+                <sheet>
+                    <group>
+                        <group string="Interview Details">
+                            <field name="name"/>
+                            <field name="application_id"/>
+                            <field name="interview_date"/>
+                            <field name="interview_type"/>
+                        </group>
+                        <group string="Interviewers">
+                            <field name="interviewer_id"/>
+                            <field name="location"/>
+                            <field name="result"/>
+                        </group>
+                    </group>
+                    <group string="Feedback">
+                        <field name="feedback"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

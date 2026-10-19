@@ -2,7 +2,7 @@
 <odoo>
 
     <menuitem id="menu_recruitment_root"
-              name="Recruitment rahma"
+              name="Recruitment"
               sequence="10"
               web_icon="recruitment_management,static/description/icon.png"/>
 
@@ -20,5 +20,56 @@
               parent="menu_recruitment_root"
               action="action_recruitment_jobs"
               sequence="10"/>
+
+
+
+    <!-- Job Applications Action -->
+    <record id="action_recruitment_applications" model="ir.actions.act_window">
+        <field name="name">Job Applications</field>
+        <field name="res_model">recruitment.application</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_recruitment_application_search"/>
+    </record>
+
+    <!-- Interviews Action -->
+    <record id="action_recruitment_interviews" model="ir.actions.act_window">
+        <field name="name">Interviews</field>
+        <field name="res_model">recruitment.interview</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_recruitment_interview_search"/>
+    </record>
+
+    <!-- Professional Experience Action -->
+    <record id="action_recruitment_experience" model="ir.actions.act_window">
+        <field name="name">Professional Experience</field>
+        <field name="res_model">recruitment.experience</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Submenus -->
+    <menuitem
+        id="menu_recruitment_experience"
+        name="Professional Experience"
+        parent="menu_recruitment_root"
+        action="action_recruitment_experience"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_recruitment_applications"
+        name="Job Applications"
+        parent="menu_recruitment_root"
+        action="action_recruitment_applications"
+        sequence="30"
+    />
+
+    <menuitem
+        id="menu_recruitment_interviews"
+        name="Interviews"
+        parent="menu_recruitment_root"
+        action="action_recruitment_interviews"
+        sequence="40"
+    />
+
 
 </odoo>

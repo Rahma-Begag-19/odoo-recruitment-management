@@ -1,5 +1,5 @@
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class RecruitmentJob(models.Model):
@@ -78,19 +78,35 @@ class RecruitmentJob(models.Model):
         string="Department",
         ondelete="set null",
     )
-    '''application_ids = fields.One2many(
+
+    application_ids = fields.One2many(
         "recruitment.application",
         "job_id",
         string="Applications",
     )
+
     application_count = fields.Integer(
-        string="Applications Count",
+        string="Application Count",
         compute="_compute_application_count",
     )
 
+    @api.depends("application_ids")
     def _compute_application_count(self):
         for job in self:
-            job.application_count = len(job.application_ids)'''
+            job.application_count = len(job.application_ids)
+
+    def action_view_applications(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Job Applications",
+            "res_model": "recruitment.application",
+            "view_mode": "list,form",
+            "domain": [("job_id", "=", self.id)],
+            "context": {
+                "default_job_id": self.id,
+            },
+        }
 
 
 class RecruitmentExperience(models.Model):
