@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Search View -->
+    <record id="view_recruitment_job_search" model="ir.ui.view">
+        <field name="name">recruitment.job.search</field>
+        <field name="model">recruitment.job</field>
+        <field name="arch" type="xml">
+            <search string="Search Jobs">
+                <field name="name" string="Job Title"/>
+                <field name="department_id"/>
+                <field name="level"/>
+                <field name="state"/>
+                <field name="work_mode"/>
+
+                <separator/>
+
+                <filter name="open_jobs"
+                        string="Open Jobs"
+                        domain="[('state', '=', 'open')]"/>
+
+                <filter name="closed_jobs"
+                        string="Closed Jobs"
+                        domain="[('state', '=', 'closed')]"/>
+
+                <separator/>
+
+                <group expand="0" string="Group By">
+                    <filter name="group_department"
+                            string="Department"
+                            context="{'group_by': 'department_id'}"/>
+
+                    <filter name="group_level"
+                            string="Level"
+                            context="{'group_by': 'level'}"/>
+
+                    <filter name="group_status"
+                            string="Status"
+                            context="{'group_by': 'state'}"/>
+
+                    <filter name="group_work_mode"
+                            string="Work Mode"
+                            context="{'group_by': 'work_mode'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- List View -->
+    <record id="view_recruitment_job_list" model="ir.ui.view">
+        <field name="name">recruitment.job.list</field>
+        <field name="model">recruitment.job</field>
+        <field name="arch" type="xml">
+            <list string="Job Offers"
+                  decoration-success="state == 'open'"
+                  decoration-muted="state == 'closed'">
+
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="place"/>
+                <field name="level"/>
+                <field name="work_mode"/>
+                <field name="number_of_positions"/>
+                <field name="salary"/>
+                <field name="announcement_date"/>
+                <field name="expiration_date"/>
+                <field name="state" widget="badge"/>
+
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Kanban View -->
+    <record id="view_recruitment_job_kanban" model="ir.ui.view">
+        <field name="name">recruitment.job.kanban</field>
+        <field name="model">recruitment.job</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="place"/>
+                <field name="level"/>
+                <field name="work_mode"/>
+                <field name="salary"/>
+                <field name="number_of_positions"/>
+                <field name="expiration_date"/>
+                <field name="state"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column gap-2">
+
+                            <strong class="fs-5">
+                                <field name="name"/>
+                            </strong>
+
+                            <div>
+                                <i class="fa fa-building me-1"/>
+                                <field name="department_id"/>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-map-marker me-1"/>
+                                <field name="place"/>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-briefcase me-1"/>
+                                <field name="level"/>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-laptop me-1"/>
+                                <field name="work_mode"/>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-users me-1"/>
+                                <field name="number_of_positions"/>
+                                Positions
+                            </div>
+
+                            <div>
+                                <i class="fa fa-money me-1"/>
+                                <field name="salary"/>
+                            </div>
+
+                            <div>
+                                <i class="fa fa-calendar me-1"/>
+                                Deadline:
+                                <field name="expiration_date"/>
+                            </div>
+
+                            <footer class="pt-2">
+                                <field name="state" widget="badge"/>
+                            </footer>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- Form View -->
+    <record id="view_recruitment_job_form" model="ir.ui.view">
+        <field name="name">recruitment.job.form</field>
+        <field name="model">recruitment.job</field>
+        <field name="arch" type="xml">
+            <form string="Job Offer">
+
+                <header>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="open,closed"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="e.g. Cybersecurity Engineer"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Job Information">
+                            <field name="department_id"/>
+                            <field name="place"/>
+                            <field name="level"/>
+                            <field name="work_mode"/>
+                            <field name="number_of_positions"/>
+                            <field name="salary"/>
+                        </group>
+
+                        <group string="Publication">
+                            <field name="announcement_date"/>
+                            <field name="expiration_date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Job Description">
+                            <field name="description"
+                                   placeholder="Describe the position, responsibilities, and expectations..."/>
+                        </page>
+
+                        <page string="Required Experience">
+                            <field name="experience"
+                                   widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

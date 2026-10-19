@@ -78,7 +78,7 @@ class RecruitmentJob(models.Model):
         string="Department",
         ondelete="set null",
     )
-    application_ids = fields.One2many(
+    '''application_ids = fields.One2many(
         "recruitment.application",
         "job_id",
         string="Applications",
@@ -90,7 +90,7 @@ class RecruitmentJob(models.Model):
 
     def _compute_application_count(self):
         for job in self:
-            job.application_count = len(job.application_ids)
+            job.application_count = len(job.application_ids)'''
 
 
 class RecruitmentExperience(models.Model):
