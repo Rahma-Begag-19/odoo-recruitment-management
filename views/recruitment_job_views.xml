@@ -12,7 +12,8 @@
                 <header>
                     <field name="state"
                            widget="statusbar"
-                           statusbar_visible="open,closed"/>
+                           statusbar_visible="open,closed"
+                           options="{'clickable': 1}"/>
                 </header>
 
                 <sheet>
@@ -150,7 +151,7 @@
                 </templates>
             </kanban>
         </field>
-        </record>
+    </record>
 
 
     <!-- Search View -->
