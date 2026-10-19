@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="careers_page" name="Careers">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <h1>Careers</h1>
+                        <p>Join our team!</p>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="website_recruitment_jobs" name="Job Offers">
+        <t t-call="website.layout">
+            <!-- Hero -->
+            <section class="py-5 bg-primary text-white text-center">
+                <div class="container">
+                    <h1 class="display-4 fw-bold">Join Our Team</h1>
+                    <p class="lead mt-3">We're building something great — and we'd love your help.</p>
+                    <a href="#open-positions" class="btn btn-light btn-lg mt-3">See Open Positions</a>
+                </div>
+            </section>
+
+            <!-- Why work with us -->
+            <section class="py-5">
+                <div class="container">
+                    <div class="row text-center g-4">
+                        <div class="col-md-4">
+                            <i class="fa fa-rocket fa-3x text-primary mb-3"/>
+                            <h4>Grow Fast</h4>
+                            <p>Real responsibility from day one, with mentorship to match.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fa fa-heart fa-3x text-primary mb-3"/>
+                            <h4>Great Culture</h4>
+                            <p>A supportive team that celebrates wins, big and small.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fa fa-balance-scale fa-3x text-primary mb-3"/>
+                            <h4>Work-Life Balance</h4>
+                            <p>Flexible hours and remote-friendly policies.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Open positions -->
+            <section id="open-positions" class="py-5 bg-light">
+                <div class="container">
+                    <h2 class="text-center mb-5">Open Positions</h2>
+
+                    <div t-if="jobs" class="row g-4">
+                        <div t-foreach="jobs" t-as="job" class="col-md-6">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title" t-field="job.name"/>
+                                    <p class="card-text text-muted"
+                                       t-field="job.description"
+                                       t-options="{'truncate_length': 180}"/>
+                                </div>
+                                <div class="card-footer bg-white border-0">
+                                    <a t-attf-href="/jobs/detail/#{slug(job)}"
+                                       class="btn btn-primary">Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-else="" class="text-center text-muted">
+                        <p>No open positions right now — but feel free to send your CV to
+                            <a href="mailto:careers@example.com">careers@example.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Spacer for the website editor -->
+            <div class="oe_structure"/>
+        </t>
+    </template>
+
+</odoo>

@@ -22,7 +22,6 @@
               sequence="10"/>
 
 
-
     <!-- Job Applications Action -->
     <record id="action_recruitment_applications" model="ir.actions.act_window">
         <field name="name">Job Applications</field>
@@ -48,28 +47,35 @@
 
     <!-- Submenus -->
     <menuitem
-        id="menu_recruitment_experience"
-        name="Professional Experience"
-        parent="menu_recruitment_root"
-        action="action_recruitment_experience"
-        sequence="20"
+            id="menu_recruitment_experience"
+            name="Professional Experience"
+            parent="menu_recruitment_root"
+            action="action_recruitment_experience"
+            sequence="20"
     />
 
     <menuitem
-        id="menu_recruitment_applications"
-        name="Job Applications"
-        parent="menu_recruitment_root"
-        action="action_recruitment_applications"
-        sequence="30"
+            id="menu_recruitment_applications"
+            name="Job Applications"
+            parent="menu_recruitment_root"
+            action="action_recruitment_applications"
+            sequence="30"
     />
 
     <menuitem
-        id="menu_recruitment_interviews"
-        name="Interviews"
-        parent="menu_recruitment_root"
-        action="action_recruitment_interviews"
-        sequence="40"
+            id="menu_recruitment_interviews"
+            name="Interviews"
+            parent="menu_recruitment_root"
+            action="action_recruitment_interviews"
+            sequence="40"
     />
 
+
+    <record id="menu_careers" model="website.menu">
+        <field name="name">Careers</field>
+        <field name="url">/careers</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">20</field>
+    </record>
 
 </odoo>

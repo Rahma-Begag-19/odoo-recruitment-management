@@ -32,7 +32,7 @@
                             <field name="work_mode"/>
                             <field name="number_of_positions"/>
                             <field name="salary"/>
-                             <field name="experience"
+                            <field name="experience"
                                    widget="many2many_tags"/>
                         </group>
 
