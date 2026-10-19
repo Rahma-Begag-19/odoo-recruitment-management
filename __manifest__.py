@@ -20,7 +20,11 @@
         "mail",
         "hr",
     ],
-    "data": [],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/recruitment_job_views.xml",
+        "views/recruitment_job_menus.xml",
+    ],
     "images": ['static/description/icon.png'],
     "installable": True,
     "application": True,

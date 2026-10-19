@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- Search View -->
-    <record id="view_recruitment_job_search" model="ir.ui.view">
-        <field name="name">recruitment.job.search</field>
+
+    <!-- Form View -->
+    <record id="view_recruitment_job_form" model="ir.ui.view">
+        <field name="name">recruitment.job.form</field>
         <field name="model">recruitment.job</field>
         <field name="arch" type="xml">
-            <search string="Search Jobs">
-                <field name="name" string="Job Title"/>
-                <field name="department_id"/>
-                <field name="level"/>
-                <field name="state"/>
-                <field name="work_mode"/>
+            <form string="Job Offer">
 
-                <separator/>
+                <header>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="open,closed"/>
+                </header>
 
-                <filter name="open_jobs"
-                        string="Open Jobs"
-                        domain="[('state', '=', 'open')]"/>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="e.g. Cybersecurity Engineer"/>
+                        </h1>
+                    </div>
 
-                <filter name="closed_jobs"
-                        string="Closed Jobs"
-                        domain="[('state', '=', 'closed')]"/>
+                    <group>
+                        <group string="Job Information">
+                            <field name="department_id"/>
+                            <field name="place"/>
+                            <field name="level"/>
+                            <field name="work_mode"/>
+                            <field name="number_of_positions"/>
+                            <field name="salary"/>
+                        </group>
 
-                <separator/>
+                        <group string="Publication">
+                            <field name="announcement_date"/>
+                            <field name="expiration_date"/>
+                        </group>
+                    </group>
 
-                <group expand="0" string="Group By">
-                    <filter name="group_department"
-                            string="Department"
-                            context="{'group_by': 'department_id'}"/>
+                    <notebook>
+                        <page string="Job Description">
+                            <field name="description"
+                                   placeholder="Describe the position, responsibilities, and expectations..."/>
+                        </page>
 
-                    <filter name="group_level"
-                            string="Level"
-                            context="{'group_by': 'level'}"/>
+                        <page string="Required Experience">
+                            <field name="experience"
+                                   widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
 
-                    <filter name="group_status"
-                            string="Status"
-                            context="{'group_by': 'state'}"/>
-
-                    <filter name="group_work_mode"
-                            string="Work Mode"
-                            context="{'group_by': 'work_mode'}"/>
-                </group>
-            </search>
+                <chatter/>
+            </form>
         </field>
     </record>
-
 
     <!-- List View -->
     <record id="view_recruitment_job_list" model="ir.ui.view">
@@ -142,62 +153,21 @@
                 </templates>
             </kanban>
         </field>
-    </record>
+        </record>
 
 
-    <!-- Form View -->
-    <record id="view_recruitment_job_form" model="ir.ui.view">
-        <field name="name">recruitment.job.form</field>
+    <!-- Search View -->
+    <record id="view_recruitment_job_search" model="ir.ui.view">
+        <field name="name">recruitment.job.search</field>
         <field name="model">recruitment.job</field>
         <field name="arch" type="xml">
-            <form string="Job Offer">
-
-                <header>
-                    <field name="state"
-                           widget="statusbar"
-                           statusbar_visible="open,closed"/>
-                </header>
-
-                <sheet>
-                    <div class="oe_title">
-                        <label for="name"/>
-                        <h1>
-                            <field name="name"
-                                   placeholder="e.g. Cybersecurity Engineer"/>
-                        </h1>
-                    </div>
-
-                    <group>
-                        <group string="Job Information">
-                            <field name="department_id"/>
-                            <field name="place"/>
-                            <field name="level"/>
-                            <field name="work_mode"/>
-                            <field name="number_of_positions"/>
-                            <field name="salary"/>
-                        </group>
-
-                        <group string="Publication">
-                            <field name="announcement_date"/>
-                            <field name="expiration_date"/>
-                        </group>
-                    </group>
-
-                    <notebook>
-                        <page string="Job Description">
-                            <field name="description"
-                                   placeholder="Describe the position, responsibilities, and expectations..."/>
-                        </page>
-
-                        <page string="Required Experience">
-                            <field name="experience"
-                                   widget="many2many_tags"/>
-                        </page>
-                    </notebook>
-                </sheet>
-
-                <chatter/>
-            </form>
+            <search string="Search Jobs">
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="level"/>
+                <field name="state"/>
+                <field name="work_mode"/>
+            </search>
         </field>
     </record>
 
