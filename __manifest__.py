@@ -18,6 +18,7 @@
     "depends": [
         "base",
         "mail",
+        "hr",
     ],
     "data": [],
     "images": ['static/description/icon.png'],
