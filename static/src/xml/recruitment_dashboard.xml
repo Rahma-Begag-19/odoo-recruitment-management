@@ -8,7 +8,7 @@
 
             <!-- Pipeline cards -->
             <div class="row g-3 mb-4">
-                <div t-foreach="state.stages" t-as="stage" t-key="stage"
+                <div t-foreach="state.stages" t-as="stage" t-key="stage.label"
                      t-attf-class="col-12 col-md-3">
                     <div class="card shadow-sm h-100"
                          t-attf-style="border-top: 4px solid #{stage.color}; cursor: pointer;"
