@@ -83,14 +83,49 @@
             </div>
 
             <!-- Applications over time chart -->
-            <div class="card shadow-sm mt-4">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Applications Over Time</h5>
-                    <div style="height: 300px;">
-                        <canvas t-ref="applicationsChart"/>
-                    </div>
+
+            <!-- Charts row -->
+            <div class="row g-4 mt-2">
+
+    <!-- Applications Over Time -->
+                <div class="col-12 col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title mb-3">
+                    Applications Over Time
+                </h5>
+                <div style="height: 300px; position: relative;">
+                    <canvas t-ref="applicationsChart"/>
                 </div>
             </div>
+        </div>
+    </div>
+
+                <!-- Hires by Department -->
+                <div class="col-12 col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title mb-3">
+                    Hires by Department
+                </h5>
+                <div style="height: 300px; position: relative;">
+                    <canvas t-ref="departmentChart"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
         </div>
     </t>

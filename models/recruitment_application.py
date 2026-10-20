@@ -155,3 +155,32 @@ class RecruitmentApplication(models.Model):
             "open_jobs": job_counts.get("open", 0),
             "closed_jobs": job_counts.get("closed", 0),
         }
+
+    @api.model
+    def get_hires_by_department(self):
+        """Count hired applications by the department of their job."""
+        groups = self.read_group(
+            [
+                ("state", "=", "hired"),
+                ("job_id.department_id", "!=", False),
+            ],
+            ["job_id"],
+            ["job_id"],
+        )
+
+        department_counts = {}
+
+        for group in groups:
+            job = self.env["recruitment.job"].browse(group["job_id"][0])
+            department = job.department_id
+
+            if department:
+                department_counts[department.name] = (
+                        department_counts.get(department.name, 0)
+                        + group["job_id_count"]
+                )
+
+        return {
+            "labels": list(department_counts.keys()),
+            "counts": list(department_counts.values()),
+        }
