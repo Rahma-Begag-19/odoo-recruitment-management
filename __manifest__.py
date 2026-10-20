@@ -30,6 +30,12 @@
         "views/recruitment_templates.xml",
     ],
     "images": ['static/description/icon.png'],
+    "assets": {
+        "web.assets_backend": [
+            "recruitment_management/static/src/js/recruitment_dashboard.js",
+            "recruitment_management/static/src/xml/recruitment_dashboard.xml",
+        ],
+    },
     "installable": True,
     "application": True,
 }

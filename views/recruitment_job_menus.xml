@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+
+    <!-- Dashboard client action -->
+    <record id="action_recruitment_dashboard" model="ir.actions.client">
+        <field name="name">Recruitment Dashboard</field>
+        <field name="tag">recruitment_management.dashboard</field>
+    </record>
+
+    <!-- Dashboard menu: sequence 5 → appears FIRST, before Job Offers -->
+    <menuitem id="menu_recruitment_dashboard"
+              name="Dashboard"
+              parent="menu_recruitment_root"
+              action="action_recruitment_dashboard"
+              sequence="5"/>
+
+    <menuitem id="menu_recruitment_jobs"
+              name="Job Offers"
+              parent="menu_recruitment_root"
+              action="action_recruitment_jobs"
+              sequence="10"/>
+
+
     <menuitem id="menu_recruitment_root"
               name="Recruitment"
               sequence="10"
@@ -15,11 +36,11 @@
     </record>
 
 
-    <menuitem id="menu_recruitment_jobs"
-              name="Job Offers"
-              parent="menu_recruitment_root"
-              action="action_recruitment_jobs"
-              sequence="10"/>
+    <!--    <menuitem id="menu_recruitment_jobs"-->
+    <!--              name="Job Offers"-->
+    <!--              parent="menu_recruitment_root"-->
+    <!--              action="action_recruitment_jobs"-->
+    <!--              sequence="10"/>-->
 
 
     <!-- Job Applications Action -->
@@ -77,5 +98,6 @@
         <field name="parent_id" ref="website.main_menu"/>
         <field name="sequence" type="int">20</field>
     </record>
+
 
 </odoo>

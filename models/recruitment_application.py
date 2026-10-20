@@ -100,3 +100,42 @@ class RecruitmentApplication(models.Model):
             "res_id": self.job_id.id,
             "target": "current",
         }
+
+
+
+    @api.model
+    def get_dashboard_stats(self):
+        """Called by the dashboard to get pipeline + job stats."""
+        application_groups = self.read_group(
+            [("state", "in", ["draft", "interview", "hired", "closed"])],
+            ["state"],
+            ["state"],
+        )
+        stage_counts = {g["state"]: g["state_count"] for g in application_groups}
+
+        job_groups = self.env["recruitment.job"].read_group(
+            [("state", "in", ["open", "closed"])],
+            ["state"],
+            ["state"],
+        )
+        job_counts = {g["state"]: g["state_count"] for g in job_groups}
+
+        return {
+            "stages": [
+                {"key": "draft", "label": "New Applications",
+                 "count": stage_counts.get("draft", 0),
+                 "color": "#0d6efd"},
+                {"key": "interview", "label": "In Interview",
+                 "count": stage_counts.get("interview", 0),
+                 "color": "#fd7e14"},
+                {"key": "hired", "label": "Hired",
+                 "count": stage_counts.get("hired", 0),
+                 "color": "#198754"},
+                {"key": "closed", "label": "Closed",
+                 "count": stage_counts.get("closed", 0),
+                 "color": "#6c757d"},
+            ],
+            "total_applications": sum(stage_counts.values()),
+            "open_jobs": job_counts.get("open", 0),
+            "closed_jobs": job_counts.get("closed", 0),
+        }
