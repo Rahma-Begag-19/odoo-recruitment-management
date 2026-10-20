@@ -101,7 +101,7 @@ class RecruitmentApplication(models.Model):
             "target": "current",
         }
 
-
+    # Dashboard Part
 
     @api.model
     def get_dashboard_stats(self):
@@ -138,4 +138,19 @@ class RecruitmentApplication(models.Model):
             "total_applications": sum(stage_counts.values()),
             "open_jobs": job_counts.get("open", 0),
             "closed_jobs": job_counts.get("closed", 0),
+        }
+
+
+    @api.model
+    def get_applications_over_time(self):
+        """Monthly application counts for the dashboard chart."""
+        groups = self.read_group(
+            [("application_date", "!=", False)],
+            ["application_date"],
+            ["application_date:month"],
+            orderby="application_date",
+        )
+        return {
+            "labels": [g["application_date:month"] for g in groups],
+            "counts": [g["application_date_count"] for g in groups],
         }
