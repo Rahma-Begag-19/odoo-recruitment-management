@@ -1,4 +1,3 @@
-
 from odoo import api, fields, models
 
 
@@ -103,7 +102,6 @@ class RecruitmentApplication(models.Model):
 
     # Dashboard Part
 
-
     @api.model
     def get_applications_over_time(self):
         """Monthly application counts for the dashboard chart."""
@@ -117,7 +115,6 @@ class RecruitmentApplication(models.Model):
             "labels": [g["application_date:month"] for g in groups],
             "counts": [g["application_date_count"] for g in groups],
         }
-
 
     @api.model
     def get_dashboard_stats(self):
@@ -176,8 +173,8 @@ class RecruitmentApplication(models.Model):
 
             if department:
                 department_counts[department.name] = (
-                        department_counts.get(department.name, 0)
-                        + group["job_id_count"]
+                    department_counts.get(department.name, 0)
+                    + group["job_id_count"]
                 )
 
         return {
@@ -185,9 +182,7 @@ class RecruitmentApplication(models.Model):
             "counts": list(department_counts.values()),
         }
 
-
     # Mail Part
-
 
     def _send_confirmation_email(self):
         """Send the 'application received' email to the applicant."""
@@ -197,4 +192,10 @@ class RecruitmentApplication(models.Model):
             raise_if_not_found=False,
         )
         if template:
-            template.sudo().send_mail(self.id, force_send=True)
+            # Use the SMTP account of the outgoing mail server as the sender.
+            sender = self.env["ir.mail_server"]._get_recruitment_sender()
+            template.sudo().send_mail(
+                self.id,
+                force_send=True,
+                email_values={"email_from": sender} if sender else None,
+            )

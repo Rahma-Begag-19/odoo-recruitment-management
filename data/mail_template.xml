@@ -10,7 +10,6 @@
             <field name="model_id" ref="model_recruitment_application"/>
 
             <field name="subject">We received your application for {{ object.job_id.name or '' }}</field>
-            <field name="email_from">{{ user.email or 'noreply@example.com' }}</field>
             <field name="email_to">{{ object.email or '' }}</field>
 
             <field name="body_html" type="html">
@@ -19,7 +18,7 @@
                     <h2 style="color: #0d6efd;">Application Received</h2>
 
                     <p>
-                        Dear<t t-out="object.name or ''"/>,
+                        Dear <t t-out="object.name or ''"/>,
                     </p>
 
                     <p>
