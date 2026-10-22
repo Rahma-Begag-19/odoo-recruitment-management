@@ -142,7 +142,7 @@ class RecruitmentWebsite(http.Controller):
             )
 
         try:
-            request.env["recruitment.application"].sudo().create({
+            application = request.env["recruitment.application"].sudo().create({
                 "name": candidate_name,
                 "job_id": job.id,
                 "email": email,
@@ -158,6 +158,15 @@ class RecruitmentWebsite(http.Controller):
             return request.redirect(
                 f"/careers/job/{job.id}?error=server"
             )
+
+        try:
+            application._send_confirmation_email()
+        except Exception:
+            _logger.exception(
+                "Could not send confirmation email to %s", email
+            )
+
+        return request.redirect("/careers/thank-you")
 
         return request.redirect("/careers/thank-you")
 

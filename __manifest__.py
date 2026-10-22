@@ -23,11 +23,12 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/recruitment_job_menus.xml",
         "views/recruitment_job_views.xml",
         "views/recruitment_application_views.xml",
         "views/recruitment_interview_views.xml",
-        "views/recruitment_job_menus.xml",
         "views/recruitment_templates.xml",
+        "data/mail_template.xml",
     ],
     "images": ['static/description/icon.png'],
     "assets": {

@@ -184,3 +184,17 @@ class RecruitmentApplication(models.Model):
             "labels": list(department_counts.keys()),
             "counts": list(department_counts.values()),
         }
+
+
+    # Mail Part
+
+
+    def _send_confirmation_email(self):
+        """Send the 'application received' email to the applicant."""
+        self.ensure_one()
+        template = self.env.ref(
+            "recruitment_management.mail_template_application_confirmation",
+            raise_if_not_found=False,
+        )
+        if template:
+            template.sudo().send_mail(self.id, force_send=True)
