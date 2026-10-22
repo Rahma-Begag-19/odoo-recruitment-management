@@ -31,6 +31,7 @@
                             <field name="place"/>
                             <field name="level"/>
                             <field name="work_mode"/>
+                            <field name="employment_type"/>
                             <field name="number_of_positions"/>
                             <field name="salary"/>
                             <field name="experience"
@@ -40,13 +41,36 @@
                         <group string="Publication">
                             <field name="announcement_date"/>
                             <field name="expiration_date"/>
+                            <field name="website_published"/>
+                            <field name="website_sequence"/>
+                            <field name="image_1920" widget="image" class="oe_avatar"/>
                         </group>
                     </group>
 
                     <notebook>
                         <page string="Job Description">
                             <field name="description"
-                                   placeholder="Describe the position, responsibilities, and expectations..."/>
+                                   placeholder="Describe the position, the role and the main expectations..."/>
+                        </page>
+                        <page string="Responsibilities">
+                            <field name="responsibilities"
+                                   placeholder="List the main duties and responsibilities..."/>
+                        </page>
+                        <page string="Must Have">
+                            <field name="requirements"
+                                   placeholder="Essential qualifications, skills and experience required..."/>
+                        </page>
+                        <page string="Nice to Have">
+                            <field name="nice_to_have"
+                                   placeholder="Additional skills or qualifications that are a plus..."/>
+                        </page>
+                        <page string="Benefits">
+                            <field name="benefits"
+                                   placeholder="Describe the benefits and what's great about this job..."/>
+                        </page>
+                        <page string="About the Company">
+                            <field name="company_intro"
+                                   placeholder="Short introduction about the company or the team..."/>
                         </page>
                     </notebook>
                 </sheet>
@@ -70,10 +94,12 @@
                 <field name="place"/>
                 <field name="level"/>
                 <field name="work_mode"/>
+                <field name="employment_type"/>
                 <field name="number_of_positions"/>
                 <field name="salary"/>
                 <field name="announcement_date"/>
                 <field name="expiration_date"/>
+                <field name="website_published"/>
                 <field name="state" widget="badge"/>
 
             </list>
@@ -92,10 +118,12 @@
                 <field name="place"/>
                 <field name="level"/>
                 <field name="work_mode"/>
+                <field name="employment_type"/>
                 <field name="salary"/>
                 <field name="number_of_positions"/>
                 <field name="expiration_date"/>
                 <field name="state"/>
+                <field name="website_published"/>
 
                 <templates>
                     <t t-name="card">
@@ -165,6 +193,7 @@
                 <field name="level"/>
                 <field name="state"/>
                 <field name="work_mode"/>
+                <field name="employment_type"/>
             </search>
         </field>
     </record>

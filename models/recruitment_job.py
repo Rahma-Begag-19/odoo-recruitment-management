@@ -90,6 +90,72 @@ class RecruitmentJob(models.Model):
         compute="_compute_application_count",
     )
 
+
+    # Detailed job content
+    responsibilities = fields.Html(
+        string="Responsibilities",
+        help="Describe the main duties and responsibilities of this position.",
+    )
+
+    requirements = fields.Html(
+        string="Required Qualifications",
+        help="Describe the essential qualifications, skills, and experience.",
+    )
+
+    nice_to_have = fields.Html(
+        string="Preferred Qualifications",
+        help="Describe additional skills or qualifications that are an advantage.",
+    )
+
+    benefits = fields.Html(
+        string="Benefits",
+        help="Describe the benefits and advantages offered for this position.",
+    )
+
+    # Optional company information for the job detail page
+    company_intro = fields.Html(
+        string="About the Company",
+        help="Provide information about the company or team hiring for this position.",
+    )
+
+    # Image displayed on the website job card or detail page
+    image_1920 = fields.Image(
+        string="Job Image",
+        max_width=1920,
+        max_height=1920,
+    )
+
+    # Website publication controls
+    website_published = fields.Boolean(
+        string="Published on Website",
+        default=True,
+        tracking=True,
+        help="Enable this option to display the job on the public careers website.",
+    )
+
+    website_sequence = fields.Integer(
+        string="Website Sequence",
+        default=10,
+        help="Lower values appear first on the careers page.",
+    )
+
+    # Employment arrangement
+    employment_type = fields.Selection(
+        [
+            ("full_time", "Full-time"),
+            ("part_time", "Part-time"),
+            ("contract", "Contract"),
+            ("internship", "Internship"),
+            ("temporary", "Temporary"),
+        ],
+        string="Employment Type",
+        default="full_time",
+        required=True,
+        tracking=True,
+    )
+
+
+
     @api.depends("application_ids")
     def _compute_application_count(self):
         for job in self:

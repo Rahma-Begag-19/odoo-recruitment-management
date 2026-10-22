@@ -151,6 +151,7 @@
             </div>
         </div>
     </template>
+
     <!-- Careers list page -->
     <template id="website_recruitment_jobs" name="Job Offers">
         <t t-call="website.layout">
@@ -194,58 +195,79 @@
                     <div t-if="jobs" class="row g-4">
                         <div t-foreach="jobs" t-as="job"
                              class="col-md-6 col-lg-4">
-                            <div class="card h-100 shadow-sm">
-                                <div class="card-body">
-                                    <h2 class="h5 card-title">
-                                        <t t-out="job.name"/>
-                                    </h2>
+                            <div class="card h-100 shadow-sm border-0 overflow-hidden">
 
-                                    <p class="text-muted small">
-                                        <i class="fa fa-map-marker me-2"/>
-                                        <t t-out="job.place"/>
-                                    </p>
-
-                                    <p>
-                                        <strong>Work mode:</strong>
-                                        <t t-out="dict(job._fields['work_mode'].selection).get(job.work_mode, '')"/>
-                                    </p>
-
-                                    <p>
-                                        <strong>Level:</strong>
-                                        <t t-out="dict(job._fields['level'].selection).get(job.level, '')"/>
-                                    </p>
-
-                                    <p t-if="job.salary">
-                                        <strong>Salary:</strong>
-                                        <span t-field="job.salary"/>
-                                    </p>
-
-                                    <p t-if="job.experience">
-                                        <strong>Experience:</strong>
-                                        <t t-out="', '.join(job.experience.mapped('name'))"/>
-                                    </p>
-
-                                    <p t-if="job.description"
-                                       class="text-muted">
-                                        <t t-out="job.description"/>
-                                    </p>
-
-                                    <p class="small text-muted"
-                                       t-if="job.expiration_date">
-                                        Apply before:
-                                        <span t-field="job.expiration_date"/>
-                                    </p>
+                                <!-- Optional job image -->
+                                <div t-if="job.image_1920" class="ratio ratio-16x9">
+                                    <img t-att-src="'/web/image/recruitment.job/%s/image_1920' % job.id"
+                                         class="card-img-top object-fit-cover"
+                                         t-att-alt="job.name"
+                                         style="object-fit: cover;"/>
                                 </div>
 
-                                <div class="card-footer bg-white border-0">
-                                    <div class="d-flex gap-2 flex-wrap">
+                                <div class="card-body d-flex flex-column">
+                                    <!-- Badges -->
+                                    <div class="d-flex flex-wrap gap-1 mb-2">
+                                        <span t-if="job.level"
+                                              class="badge text-bg-primary">
+                                            <t t-out="dict(job._fields['level'].selection).get(job.level, '')"/>
+                                        </span>
+                                        <span t-if="job.work_mode"
+                                              class="badge text-bg-secondary">
+                                            <t t-out="dict(job._fields['work_mode'].selection).get(job.work_mode, '')"/>
+                                        </span>
+                                        <span t-if="job.employment_type"
+                                              class="badge text-bg-info text-dark">
+                                            <t t-out="dict(job._fields['employment_type'].selection).get(job.employment_type, '')"/>
+                                        </span>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <h2 class="h5 card-title mb-2">
                                         <a t-att-href="'/careers/job/%s' % job.id"
-                                           class="btn btn-outline-primary">
+                                           class="text-decoration-none text-dark">
+                                            <t t-out="job.name"/>
+                                        </a>
+                                    </h2>
+
+                                    <!-- Location -->
+                                    <p class="text-muted small mb-2">
+                                        <i class="fa fa-map-marker me-1"/>
+                                        <t t-out="job.place or 'Remote'"/>
+                                    </p>
+
+<!--                                    &lt;!&ndash; Short description (plain text excerpt) &ndash;&gt;-->
+<!--                                    <p t-if="job.description"-->
+<!--                                       class="text-muted small flex-grow-1 mb-3"-->
+<!--                                       style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">-->
+<!--                                        <t t-out="job.description"/>-->
+<!--                                    </p>-->
+<!--                                    <div t-else="" class="flex-grow-1"/>-->
+
+                                    <!-- Meta info -->
+                                    <div class="d-flex flex-wrap gap-3 small text-muted mb-3">
+                                        <span t-if="job.salary">
+                                            <i class="fa fa-money me-1"/>
+                                            <span t-field="job.salary"/>
+                                        </span>
+                                        <span t-if="job.number_of_positions">
+                                            <i class="fa fa-users me-1"/>
+                                            <t t-out="job.number_of_positions"/> position(s)
+                                        </span>
+                                        <span t-if="job.expiration_date">
+                                            <i class="fa fa-calendar me-1"/>
+                                            before <span t-field="job.expiration_date"/>
+                                        </span>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="d-flex gap-2 mt-auto">
+                                        <a t-att-href="'/careers/job/%s' % job.id"
+                                           class="btn btn-outline-primary flex-fill">
                                             More Details
                                         </a>
-
                                         <button type="button"
-                                                class="btn btn-primary"
+                                                class="btn btn-primary flex-fill"
                                                 data-bs-toggle="modal"
                                                 t-att-data-bs-target="'#applyModal%s' % job.id">
                                             Apply Now
@@ -254,15 +276,17 @@
                                 </div>
                             </div>
 
-                            <!-- One modal per job — THIS is what makes the
-                                 card's Apply button work -->
+                            <!-- One modal per job -->
                             <t t-call="recruitment_management.application_modal"/>
                         </div>
                     </div>
 
-                    <div t-else="" class="text-center text-muted">
-                        <p>No open positions right now — but feel free to send your CV to
-                            <a href="mailto:rahmabegag19@gmail.com">rahmabegag19@gmail.com</a>.
+                    <div t-else="" class="text-center text-muted py-5">
+                        <i class="fa fa-briefcase fa-3x mb-3 opacity-50"/>
+                        <p class="mb-1">No open positions right now</p>
+                        <p>
+                            Feel free to send your CV to
+                            <a href="mailto:rahmabegag19@gmail.com">rahmabegag19@gmail.com</a>
                         </p>
                     </div>
                 </div>
@@ -272,74 +296,255 @@
         </t>
     </template>
 
-    <!-- Job detail page -->
+    <!-- Job detail page - upgraded layout inspired by Odoo standard -->
     <template id="careers_job_detail" name="Job Details">
         <t t-call="website.layout">
-            <div id="wrap">
-                <section class="py-5">
+            <div id="wrap" class="js_hr_recruitment">
+
+                <!-- Top navigation bar -->
+                <nav class="navbar navbar-light border-top shadow-sm d-print-none">
                     <div class="container">
-                        <a href="/careers" class="btn btn-link px-0">
-                            ← All Open Positions
-                        </a>
-
-                        <div t-if="error" class="alert alert-danger mt-3">
-                            <t t-if="error == 'invalid'">Please check the form fields and try again.</t>
-                            <t t-elif="error == 'resume'">Invalid resume file. Use PDF/DOC/DOCX, max 5 MB.</t>
-                            <t t-else="">Something went wrong. Please try again later.</t>
+                        <div class="d-flex flex-column flex-md-row flex-md-wrap flex-lg-nowrap justify-content-between w-100">
+                            <span class="navbar-brand h4 my-0 me-auto">
+                                <a href="/careers">
+                                    <i class="fa fa-long-arrow-left text-primary me-2"/>All Open Positions
+                                </a>
+                            </span>
                         </div>
+                    </div>
+                </nav>
 
-                        <h1 t-out="job.name" class="mt-3"/>
+                <!-- Error messages -->
+                <div t-if="error" class="container mt-3">
+                    <div class="alert alert-danger">
+                        <t t-if="error == 'invalid'">Please check the form fields and try again.</t>
+                        <t t-elif="error == 'resume'">Invalid resume file. Use PDF/DOC/DOCX, max 5 MB.</t>
+                        <t t-else="">Something went wrong. Please try again later.</t>
+                    </div>
+                </div>
 
-                        <p class="text-muted">
-                            <t t-out="job.place"/>
-                            ·
-                            <t t-out="dict(job._fields['work_mode'].selection).get(job.work_mode, '')"/>
-                            ·
-                            <t t-out="dict(job._fields['level'].selection).get(job.level, '')"/>
-                        </p>
-
-                        <div class="row mt-4">
-                            <div class="col-lg-8">
-                                <div t-if="job.description"
-                                     t-field="job.description"/>
-                                <p t-else="">No description has been provided yet.</p>
-
-                                <h3 t-if="job.experience" class="mt-4">
-                                    Required Experience
-                                </h3>
-                                <ul t-if="job.experience">
-                                    <li t-foreach="job.experience"
-                                        t-as="experience">
-                                        <t t-out="experience.name"/>
-                                    </li>
-                                </ul>
+                <!-- Header: Title + Location + Apply button -->
+                <section class="pb-4 pt-4">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-9">
+                                <h1 class="mb-2" t-out="job.name"/>
+                                <h5 class="fw-light text-muted mb-0">
+                                    <i class="fa fa-map-marker me-2"/>
+                                    <t t-out="job.place or 'Remote'"/>
+                                    <span class="mx-2">·</span>
+                                    <t t-out="dict(job._fields['work_mode'].selection).get(job.work_mode, '')"/>
+                                    <span class="mx-2">·</span>
+                                    <t t-out="dict(job._fields['level'].selection).get(job.level, '')"/>
+                                    <t t-if="job.employment_type">
+                                        <span class="mx-2">·</span>
+                                        <t t-out="dict(job._fields['employment_type'].selection).get(job.employment_type, '')"/>
+                                    </t>
+                                </h5>
                             </div>
 
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main description + sidebar -->
+                <section class="pt-0 pb-4">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Left content -->
+                            <div class="col-lg-8">
+                                <!-- Job image if available -->
+                                <div t-if="job.image_1920" class="mb-4">
+                                    <img t-att-src="'/web/image/recruitment.job/%s/image_1920' % job.id"
+                                         class="img-fluid rounded shadow-sm w-100"
+                                         style="max-height: 320px; object-fit: cover;"
+                                         t-att-alt="job.name"/>
+                                </div>
+
+                                <!-- About the company -->
+                                <div t-if="job.company_intro" class="mb-4">
+                                    <h3 class="h4">About the Company</h3>
+                                    <div t-field="job.company_intro"/>
+                                </div>
+
+                                <!-- Main description -->
+                                <div t-if="job.description" class="lead mb-4" t-field="job.description"/>
+                                <p t-else="" class="text-muted">No description has been provided yet.</p>
+
+                                <!-- Experience tags -->
+                                <div t-if="job.experience" class="mb-4">
+                                    <h3 class="h5">Required Experience</h3>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <span t-foreach="job.experience" t-as="exp"
+                                              class="badge text-bg-secondary fs-6 px-3 py-2">
+                                            <t t-out="exp.name"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right sidebar card -->
                             <div class="col-lg-4">
-                                <div class="card shadow-sm">
+                                <div class="card shadow-sm sticky-top" style="top: 90px;">
                                     <div class="card-body">
-                                        <p t-if="job.salary">
+                                        <h5 class="card-title mb-3">Job Summary</h5>
+
+                                        <p t-if="job.salary" class="mb-2">
+                                            <i class="fa fa-money me-2 text-primary"/>
                                             <strong>Salary:</strong>
                                             <span t-field="job.salary"/>
                                         </p>
-                                        <p t-if="job.expiration_date">
+                                        <p t-if="job.number_of_positions" class="mb-2">
+                                            <i class="fa fa-users me-2 text-primary"/>
+                                            <strong>Positions:</strong>
+                                            <t t-out="job.number_of_positions"/>
+                                        </p>
+                                        <p t-if="job.employment_type" class="mb-2">
+                                            <i class="fa fa-briefcase me-2 text-primary"/>
+                                            <strong>Type:</strong>
+                                            <t t-out="dict(job._fields['employment_type'].selection).get(job.employment_type, '')"/>
+                                        </p>
+                                        <p t-if="job.work_mode" class="mb-2">
+                                            <i class="fa fa-laptop me-2 text-primary"/>
+                                            <strong>Work Mode:</strong>
+                                            <t t-out="dict(job._fields['work_mode'].selection).get(job.work_mode, '')"/>
+                                        </p>
+                                        <p t-if="job.level" class="mb-2">
+                                            <i class="fa fa-signal me-2 text-primary"/>
+                                            <strong>Level:</strong>
+                                            <t t-out="dict(job._fields['level'].selection).get(job.level, '')"/>
+                                        </p>
+                                        <p t-if="job.expiration_date" class="mb-3">
+                                            <i class="fa fa-calendar me-2 text-primary"/>
                                             <strong>Deadline:</strong>
                                             <span t-field="job.expiration_date"/>
                                         </p>
+
                                         <button type="button"
-                                                class="btn btn-primary w-100"
+                                                class="btn btn-primary w-100 btn-lg"
                                                 data-bs-toggle="modal"
                                                 t-att-data-bs-target="'#applyModal%s' % job.id">
-                                            Apply Now
+                                            Apply Now!
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <t t-call="recruitment_management.application_modal"/>
                     </div>
                 </section>
+
+                <!-- Responsibilities / Must Have / Nice to Have -->
+                <section class="s_comparisons pt-4 pb-4 bg-light" t-if="job.responsibilities or job.requirements or job.nice_to_have">
+                    <div class="container">
+                        <div class="row g-4">
+                            <!-- Responsibilities -->
+                            <div class="col-lg-4" t-if="job.responsibilities">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h4 class="mb-0 h5">Responsibilities</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div t-field="job.responsibilities"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Must Have -->
+                            <div class="col-lg-4" t-if="job.requirements">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h4 class="mb-0 h5">Must Have</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div t-field="job.requirements"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nice to Have -->
+                            <div class="col-lg-4" t-if="job.nice_to_have">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h4 class="mb-0 h5">Nice to Have</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div t-field="job.nice_to_have"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's great / Benefits -->
+                <section class="pt-5 pb-5" t-if="job.benefits">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <h2 class="mb-4">What's great in the job?</h2>
+                                <div class="lead" t-field="job.benefits"/>
+                            </div>
+                            <div class="col-lg-4 mt-4 mt-lg-0">
+                                <div class="card shadow text-center border-0">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Join Us</h5>
+                                    </div>
+                                    <div class="card-body p-4">
+                                        <i class="fa fa-rocket fa-3x text-primary mb-3"/>
+                                        <p class="mb-3">Ready to take the next step in your career?</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What We Offer -->
+                <section class="s_features pt-5 pb-5 bg-light">
+                    <div class="container">
+                        <h3 class="mb-3">What We Offer</h3>
+                        <p class="lead text-muted mb-5">
+                            Each employee has a chance to see the impact of their work.
+                            You can make a real contribution to the success of the company.
+                        </p>
+                        <div class="row g-4 text-center">
+                            <div class="col-6 col-md-3">
+                                <div class="p-3">
+                                    <i class="fa fa-gift fa-2x text-primary mb-3"/>
+                                    <h5 class="h6">Perks</h5>
+                                    <p class="small text-muted mb-0">Attractive salary package &amp; benefits</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3">
+                                    <i class="fa fa-graduation-cap fa-2x text-primary mb-3"/>
+                                    <h5 class="h6">Trainings</h5>
+                                    <p class="small text-muted mb-0">Continuous learning opportunities</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3">
+                                    <i class="fa fa-users fa-2x text-primary mb-3"/>
+                                    <h5 class="h6">Great Team</h5>
+                                    <p class="small text-muted mb-0">Supportive &amp; collaborative culture</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3">
+                                    <i class="fa fa-balance-scale fa-2x text-primary mb-3"/>
+                                    <h5 class="h6">Work-Life Balance</h5>
+                                    <p class="small text-muted mb-0">Flexible hours &amp; remote options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Application Modal -->
+                <t t-call="recruitment_management.application_modal"/>
+
             </div>
         </t>
     </template>
